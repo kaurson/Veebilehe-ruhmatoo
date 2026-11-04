@@ -1,0 +1,17 @@
+    body {
+  margin: 0;
+  background-color: #2b2d42;
+  font-family: "Golos Text", sans-serif;
+}
+body {
+  margin: 0;
+  background-color: #2b2d42;
+  font-family: "Golos Text", sans-serif;
+}
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #ffffff;
+}
