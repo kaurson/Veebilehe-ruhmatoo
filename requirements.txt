@@ -1,0 +1,6 @@
+feedparser
+newspaper4k
+beautifulsoup4
+fastapi
+uvicorn
+aiosqlite
