@@ -18,20 +18,23 @@
 </header>
 
 <main>
-    <body>
-        <div id="feed-container">
-            <p>Laen artikleid...</p>    
+    <div class="feed" id="feed-scroll">
+      <div id="feed-container">
+        <p>Laen artikleid...</p>
+      </div>
+      <div id="feed-sentinel"></div>
+    </div>
+  
+    <template id="news-template">
+      <article class="news-card">
+        <div class="news-meta">
+          <span class="news-date"></span>
+          <span class="news-author"></span>
+          <span class="news-source"></span>
         </div>
-        <template id="news-template">
-            <div class="news-card">
-              <div class="news-meta">
-                <span class="news-date"></span> • By <span class="news-author"></span>  <span class="news-source"></span>
-              </div>
-              <h2 class="news-title"></h2>
-              <p class="news-body"></p>
-            </div>
-          </template>
-          <script src="/js/index.js"></script>
-
-    </body>
-</main>
+        <h2 class="news-title"></h2>
+        <p class="news-body"></p>
+      </article>
+    </template>
+  </main>
+  <script src="/js/index.js"></script>
