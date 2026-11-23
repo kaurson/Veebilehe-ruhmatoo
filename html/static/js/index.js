@@ -57,6 +57,8 @@ async function loadFeedItems() {
       setText(clone, ".news-author", article.author);
       setText(clone, ".news-source", article.source);
       setText(clone, ".news-title", article.title);
+      const link = clone.querySelector(".news-link");
+      if (link && article.link) link.href = article.link;
       container.appendChild(clone);
     }
 

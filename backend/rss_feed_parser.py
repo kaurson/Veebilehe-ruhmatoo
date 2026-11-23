@@ -1,9 +1,13 @@
 from datetime import datetime
 import sqlite3
+import time
 import feedparser
 from newspaper import Article
 
-DB_NAME = "rss_database.db"
+ARTICLES_PER_FEED = 10
+REQUEST_DELAY_SECONDS = 2
+
+DB_NAME = "../rss_database.db"
 
 
 def init_db():
@@ -17,21 +21,41 @@ def init_db():
             link TEXT UNIQUE,
             published TEXT,
             summary TEXT,
-            image_url TEXT,
             full_text TEXT,
             source TEXT,
             author TEXT
         )
     """
   )
+  existing = {row[1] for row in cursor.execute("PRAGMA table_info(articles)")}
+  for column in ("full_text", "author"):
+    if column not in existing:
+      cursor.execute(f"ALTER TABLE articles ADD COLUMN {column} TEXT")
   conn.commit()
   conn.close()
 
 
+def purge_db():
+  init_db()
+  conn = sqlite3.connect(DB_NAME)
+  cursor = conn.cursor()
+  cursor.execute("DELETE FROM articles")
+  cursor.execute("DELETE FROM sqlite_sequence WHERE name = 'articles'")
+  conn.commit()
+  conn.close()
+  print("Database purged. All articles removed.")
+
+
 RSS_FEEDS = {
-    "Python Insider": "https://pyfound.blogspot.com/atom.xml",
-    # Add more news feeds here
-}
+   "CNBC Top News": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+    "CNBC World": "https://www.cnbc.com/id/100727362/device/rss/rss.html",
+    #"MarketWatch Top Stories": "https://feeds.marketwatch.com/marketwatch/topstories",
+    #"Bloomberg Markets": "https://feeds.bloomberg.com/markets/news.rss",
+    #"FT Home": "https://www.ft.com/?format=rss",
+    "FT Markets": "https://www.ft.com/markets?format=rss",
+    "Yahoo Finance": "https://finance.yahoo.com/news/rssindex",
+    "Forbes Business": "https://www.forbes.com/business/feed/",
+    }
 
 
 def fetch_and_store_rss():
@@ -45,7 +69,7 @@ def fetch_and_store_rss():
     print(f"Fetching feed: {source_name}...")
     feed = feedparser.parse(url)
 
-    for entry in feed.entries:
+    for entry in feed.entries[:ARTICLES_PER_FEED]:
       title = entry.get("title", "No Title")
       link = entry.get("link", "")
       published = entry.get(
@@ -63,10 +87,8 @@ def fetch_and_store_rss():
       if cursor.fetchone():
         continue
 
-      image_url = None
       full_text = None
 
-      # Extract full text and image using newspaper4k
       try:
         print(f"  -> Extracting full text for: {title[:30]}...")
         article = Article(link)
@@ -74,20 +96,17 @@ def fetch_and_store_rss():
         article.parse()
 
         full_text = article.text  # Clean article text for your classifier
-        image_url = article.top_image  # Main thumbnail image for your website
-
-        # Fallback if feed has an image enclosure that newspaper missed
-        if not image_url and "media_content" in entry:
-          image_url = entry.media_content[0].get("url")
 
       except Exception as e:
         print(f"  -> Error downloading full text from {link}: {e}")
         full_text = summary  # Fallback to summary if scraping fails
 
+      time.sleep(REQUEST_DELAY_SECONDS)
+
       try:
         cursor.execute(
             """
-                    INSERT INTO articles (title, link, published, summary, image_url, full_text, source, author)
+                    INSERT INTO articles (title, link, published, summary, full_text, source, author)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
             (
@@ -95,7 +114,6 @@ def fetch_and_store_rss():
                 link,
                 published,
                 summary,
-                image_url,
                 full_text,
                 source_name,
                 author,

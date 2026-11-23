@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Finbros</title>
-<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/index.css?v=3">
 <header>
     <div class="header">
         <h1> Fintrack</h1>
@@ -26,14 +26,18 @@
     </div>
   
     <template id="news-template">
+        <div class = "line_space"></div>
       <article class="news-card">
-        <div class="news-meta">
-          <span class="news-date"></span>
-          <span class="news-author"></span>
-          <span class="news-source"></span>
-        </div>
-        <h2 class="news-title"></h2>
+        <a class="news-link" href="#" target="_blank" rel="noopener">
+          <div class="news-meta">
+            <span class="news-date"></span>
+            <span class="news-author"></span>
+            <span class="news-source"></span>
+          </div>
+          <h2 class="news-title"></h2>
+        </a>
       </article>
+      
     </template>
   </main>
   <script src="/js/index.js?v=2"></script>
