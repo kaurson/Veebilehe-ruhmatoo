@@ -26,8 +26,15 @@ async def get_articles(limit: int = 5, offset: int = 0):
 # Loome static kataloogi, kui see ei ole olemas
 #STATIC_DIR.mkdir(exist_ok=True)
 
+class NoCacheStaticFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = "no-store"
+        return response
+
+
 # Mountime static kataloogi
-app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+app.mount("/", NoCacheStaticFiles(directory=STATIC_DIR, html=True), name="static")
 
 # Startime FastAPI serveri
 if __name__ == "__main__":

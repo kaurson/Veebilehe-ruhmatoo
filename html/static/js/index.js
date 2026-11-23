@@ -21,6 +21,11 @@ const template = document.getElementById("news-template");
 const scrollBox = document.getElementById("feed-scroll");
 const sentinel = document.getElementById("feed-sentinel");
 
+function setText(root, selector, value) {
+  const node = root.querySelector(selector);
+  if (node) node.textContent = value || "";
+}
+
 function sentinelIsVisible() {
   const root = scrollBox.getBoundingClientRect();
   const mark = sentinel.getBoundingClientRect();
@@ -48,11 +53,10 @@ async function loadFeedItems() {
 
     for (const article of articles) {
       const clone = template.content.cloneNode(true);
-      clone.querySelector(".news-date").textContent = article.published || "";
-      clone.querySelector(".news-author").textContent = article.author || "";
-      clone.querySelector(".news-source").textContent = article.source || "";
-      clone.querySelector(".news-title").textContent = article.title || "";
-      clone.querySelector(".news-body").textContent = article.summary || "";
+      setText(clone, ".news-date", article.published);
+      setText(clone, ".news-author", article.author);
+      setText(clone, ".news-source", article.source);
+      setText(clone, ".news-title", article.title);
       container.appendChild(clone);
     }
 

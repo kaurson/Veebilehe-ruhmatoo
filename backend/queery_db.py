@@ -9,7 +9,7 @@ async def get_articles(limit: int = 5, offset: int = 0): # asünkroonne funktsio
   async with aiosqlite.connect(DB_PATH) as db: # ühendame andmebaasiga
         db.row_factory = aiosqlite.Row # loome row factory'i
         async with db.execute(
-            "SELECT id, title, summary, published, source FROM articles ORDER BY id DESC LIMIT ? OFFSET ?", 
+            "SELECT id, title, published, source FROM articles ORDER BY id DESC LIMIT ? OFFSET ?", 
             (limit, offset) # valime andmebaasist x number artikleid, alates offset-ist
         ) as cursor:
             rows = await cursor.fetchall() # salvestame andmed muutujasse
