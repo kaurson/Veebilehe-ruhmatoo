@@ -4,6 +4,9 @@ import os
 import sqlite3
 from queery_db import get_article_by_id, get_articles as fetch_articles
 from pathlib import Path
+from inference import classify
+
+
 
 # GLOBAL VARIABLES
 DB_PATH = "rss_database.db"
@@ -22,6 +25,12 @@ async def get_article(article_id: int):
 async def get_articles(limit: int = 5, offset: int = 0):
     articles = await fetch_articles(limit, offset)
     return articles 
+
+@app.get("/classify")
+async def classify_article(title: str, summary: str):
+    return classify(title, summary)
+
+
 
 # Loome static kataloogi, kui see ei ole olemas
 #STATIC_DIR.mkdir(exist_ok=True)

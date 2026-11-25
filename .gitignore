@@ -4,3 +4,4 @@
 *.db
 backend/model/
 backend/Julia-1/
+backend/test_inference_pipeline.py
