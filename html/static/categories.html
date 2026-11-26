@@ -52,22 +52,22 @@
           <input type="checkbox" name="category" value="world">
           World
         </label>
-      </div>
+    </div>
+    <input type="text" id="categories-input-field" placeholder="Kategooriad">
+    <input type="number" id="limit-input-field" placeholder="Artiklite number">
+    <button type="button" id="load-articles-button">Otsi artikleid</button>
 
-
-      <main>
-        <div class="feed" id="feed-scroll">
-          <div id="feed-container">
-            <p>Laen artikleid...</p>
-          </div>
-          <div id="feed-sentinel"></div>
+    <div class="feed" id="feed-scroll">
+        <div id="feed-container">
+            <span class="loader"></span>
         </div>
-      
-        <template id="news-template">
-            <div class = "line_space"></div>
-          <article class="news-card">
+        <div id="feed-sentinel"></div>
+    </div>
+    <template id="news-template">
+        <div class = "line_space"></div>
+        <article class="news-card">
             <a class="news-link" href="#" target="_blank" rel="noopener">
-              <div class="news-meta">
+                <div class="news-meta">
                 <span class="news-date"></span>
                 <span class="news-author"></span>
                 <span class="news-source"></span>
@@ -79,5 +79,6 @@
         </template>
       </main>
       <script src="/js/index.js?v=2"></script>
+      <script src="/js/categories.js"></script>
 </body>
 </html>

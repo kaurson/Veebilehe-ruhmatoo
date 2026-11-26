@@ -20,6 +20,10 @@ async def get_articles(limit: int = 5, offset: int = 0): # asünkroonne funktsio
 
 
 
+async def get_recent_articles(scan: int = 50): # tagastab viimased scan artiklit (kategoriseerimiseks)
+  return await get_articles(scan, 0)
+
+
 async def get_article_by_id(article_id): # asünkroonne funktsioon, mis tagastab artikli andmed andmebaasist
   conn = sqlite3.connect(DB_NAME) # ühendame andmebaasiga
   cursor = conn.cursor() # loome cursori

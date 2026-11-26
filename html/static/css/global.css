@@ -4,7 +4,11 @@ body {
 }
 
 body {
-    background-color: pink;
+    background-image: url("/data/ilus_kassipilt.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: #333;
     font-family: 'Arial', sans-serif;
     font-size: 16px;
@@ -170,3 +174,30 @@ a {
     height: 10px;
     background-color: black;
 }
+
+
+.loader { /* Loader for the feed  https://cssloaders.github.io */
+    --color-1: #111;
+    --color-2: #ff3d00;
+    --size: 1px;
+  
+    width: calc(48 * var(--size));
+    height: calc(48 * var(--size));
+    margin: 24px auto;
+    border: calc(5 * var(--size)) solid var(--color-1);
+    border-bottom-color: var(--color-2);
+    border-radius: 50%;
+    display: block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
