@@ -1,14 +1,3 @@
-function loadFeed() {
-    console.log("Feed loaded");
-    document.querySelector(".feed-item-content").innerHTML = "Feed loaded";
-    window.location.href = "categories.html";
-}
-
-function loadCategories() {
-    console.log("Categories loaded");
-    document.querySelector(".categories-content").innerHTML = "Categories loaded";
-    window.location.href = "categories.html";
-}
 
 
 const LIMIT = 5;
@@ -21,26 +10,29 @@ const template = document.getElementById("news-template");
 const scrollBox = document.getElementById("feed-scroll");
 const sentinel = document.getElementById("feed-sentinel");
 
+// Kirjutab valitud elemendi teksti.
 function setText(root, selector, value) {
   const node = root.querySelector(selector);
   if (node) node.textContent = value || "";
 }
 
+// Kontrollib, kas voo lõpp on ekraanil näha.
 function sentinelIsVisible() {
   const root = scrollBox.getBoundingClientRect();
   const mark = sentinel.getBoundingClientRect();
   return mark.top <= root.bottom + 200;
 }
 
+// Laeb serverist järgmise hulga artikleid ja lisab need voogu.
 async function loadFeedItems() {
-  if (loading || done) return;
+  if (window.feedPaused || loading || done) return;
   loading = true;
 
   try {
     const response = await fetch(`/articles/${LIMIT}/${offset}`);
-    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-
     const articles = await response.json();
+    if (window.feedPaused) return;
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
     if (!Array.isArray(articles)) throw new Error("Unexpected response");
 
     if (offset === 0) container.innerHTML = "";
@@ -73,6 +65,7 @@ async function loadFeedItems() {
   }
 }
 
+// Laeb artikleid seni, kuni voog täidab nähtava ala.
 async function loadUntilFilled() {
   while (!done && sentinelIsVisible()) {
     const loaded = offset;

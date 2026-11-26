@@ -78,11 +78,9 @@ def fetch_and_store_rss():
       summary = entry.get("summary", entry.get("description", ""))
       author = entry.get("author", "Unknown")
 
-      # Skip if link is missing or already in DB
       if not link:
         continue
 
-      # Check if article already exists to avoid redundant web scraping
       cursor.execute("SELECT id FROM articles WHERE link = ?", (link,))
       if cursor.fetchone():
         continue
@@ -95,11 +93,11 @@ def fetch_and_store_rss():
         article.download()
         article.parse()
 
-        full_text = article.text  # Clean article text for your classifier
+        full_text = article.text
 
       except Exception as e:
         print(f"  -> Error downloading full text from {link}: {e}")
-        full_text = summary  # Fallback to summary if scraping fails
+        full_text = summary
 
       time.sleep(REQUEST_DELAY_SECONDS)
 

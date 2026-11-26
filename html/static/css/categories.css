@@ -1,0 +1,132 @@
+.header {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+
+}
+
+
+.header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.header nav ul li {
+    margin: 0 10px;
+}
+
+.header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+}
+
+.header nav ul li a:hover {
+    background-color: black;
+    color: white;
+}
+
+
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    width: min(720px, 90vw);
+    margin: 16px auto;
+  }
+  
+  .category-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  
+  .category-chip:has(input:checked),
+  .category-chip:hover {
+    background: #333;
+    color: white;
+  }
+
+
+
+  #load-articles-button {
+    width: 50vw;
+    margin: 16px auto;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+
+#limit-input-field {
+    width: 20vw;
+    margin: 16px auto;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+
+  #categories-input-field {
+    width: 50vw;
+    margin: 16px auto;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }

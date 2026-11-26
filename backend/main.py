@@ -1,9 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 import os
 import sqlite3
-from queery_db import get_article_by_id, get_articles as fetch_articles
+from queery_db import get_article_by_id, get_articles as fetch_articles, get_recent_articles
 from pathlib import Path
+from starlette.concurrency import run_in_threadpool
 from inference import classify
 
 
@@ -30,6 +31,22 @@ async def get_articles(limit: int = 5, offset: int = 0):
 async def classify_article(title: str, summary: str):
     return classify(title, summary)
 
+
+SCAN_LIMIT = 50 # mitu viimast artiklit kategoriseerimiseks läbi vaadatakse
+
+@app.get("/categorised-feed") # Tagastab artiklid, mis sobivad valitud kategooriatega
+async def categorised_feed(categories: str, limit: int = 5):
+    names = [c.strip() for c in categories.split(",") if c.strip()]
+    if len(names) < 2:
+        raise HTTPException(status_code=400, detail="Lisa vähemalt 2 kategooriat")
+    matches = []
+    for article in await get_recent_articles(SCAN_LIMIT):
+        result = await run_in_threadpool(classify, article["title"], None, names)
+        if result["choice"] in names:
+            matches.append(article)
+            if len(matches) >= limit:
+                break
+    return matches
 
 
 # Loome static kataloogi, kui see ei ole olemas
