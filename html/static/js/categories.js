@@ -53,25 +53,34 @@ async function loadMatchingArticles() {
 
 
 loadArticlesButton.addEventListener("click", async () => {
-window.feedPaused = true;
-const selected = selectedCategories();
-if (categoriesInputField.value.trim()) {
+  window.feedPaused = true;
+  const selected = selectedCategories();
+  if (categoriesInputField.value.trim()) {
     const typed = categoriesInputField.value
       .split(",")
       .map((category) => category.trim())
       .filter(Boolean);
     selected.push(...typed);
   }
+
+  if (selected.length < 2) {
+    container.textContent = "Vali vahemalt 2 kategooriat.";
+    return;
+  }
+
   const limit = limitInputField.value || "5";
   const params = new URLSearchParams({
     categories: selected.join(","),
     limit,
   });
 
-container.innerHTML = '<span class="loader"></span>';
-const response = await fetch(`/categorised-feed?${params}`);
-if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-showArticles(await response.json());
+  container.innerHTML = '<span class="loader"></span>';
+  try {
+    const response = await fetch(`/categorised-feed?${params}`);
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+    showArticles(await response.json());
+  } catch (error) {
+    container.textContent = "Midagi laks valesti, proovi uuesti.";
+    console.error(error);
+  }
 });
-
-})();
