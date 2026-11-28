@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fintrack - kuidas see tootab</title>
+  <link rel="stylesheet" href="css/selgitus.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">Fintrack</a>
+    <nav>
+      <a href="categories.html">Kategooriad</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Kuidas Fintrack tootab</h1>
+
+    <section id="uldpilt">
+      <h2>Uldpilt</h2>
+      <p>Fintrack on Finance News-Gathering veebileht, mille eesmark on leida kasutajale vajalik informatsioon. Leht kohandub vastavalt sellele, milliseid valikuid kasutaja teeb. Tanu sellele saab kasutaja teha kvaliteetsemaid investeeringuid ja asjakohasemaid treide. </p>
+      <pre class="skeem">
+ CNBC, FT, Yahoo, Forbes    (RSS-voog)
+          |
+          
+ rss_feed_parser.py         kogub uudised
+          |
+          
+ rss_database.db            SQLite andmebaas
+          |
+          
+ main.py (FastAPI)  <=>  inference.py (AI mudel Julia-1)
+          |
+          
+ brauser: esileht + kategooriate leht
+      </pre>
+    </section>
+
+    <!-- Jargmised osad: Uudiste kogumine, Andmebaas, Server,
+         Esileht ja loputu voog, Tehisintellekt, Kasutatud tehnoloogiad -->
+  </main>
+</body>
+</html>

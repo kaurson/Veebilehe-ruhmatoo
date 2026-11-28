@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f5f9;
+  color: #222;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: black;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 0;
+}
+
+main {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+section {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.skeem {
+  background: #1e1e1e;
+  color: #9cdcfe;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
